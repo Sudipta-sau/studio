@@ -61,7 +61,7 @@ export function ChatLayout() {
 
 
   return (
-    <div className="grid flex-1 grid-cols-1 md:grid-cols-[300px_1fr] h-[calc(100%-4rem)]">
+    <div className="grid flex-1 grid-cols-1 md:grid-cols-[300px_1fr] h-full">
       <aside className="hidden md:flex flex-col border-r">
         <div className="p-4 space-y-4">
             <div className="relative">
