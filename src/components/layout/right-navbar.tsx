@@ -8,6 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Separator } from '../ui/separator';
 import { Logo } from '../icons/logo';
+import { users } from '@/lib/mock-data';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 const mainMenuItems = [
   { href: '/', label: 'Feed', icon: Home },
@@ -19,12 +21,12 @@ const mainMenuItems = [
 ];
 
 const secondaryMenuItems = [
-    { href: '/profile', label: 'Profile', icon: User },
     { href: '/settings', label: 'Settings', icon: Settings },
 ]
 
 export function RightNavbar() {
   const pathname = usePathname();
+  const currentUser = users.find(u => u.id === 'u5');
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -69,6 +71,23 @@ export function RightNavbar() {
                     </TooltipTrigger>
                     <TooltipContent side="right">SOS</TooltipContent>
                 </Tooltip>
+                {currentUser && (
+                  <Tooltip>
+                      <TooltipTrigger asChild>
+                          <Link href="/profile">
+                              <Avatar className={cn(
+                                'h-9 w-9 md:h-8 md:w-8 border-2 border-transparent',
+                                isActive('/profile') && 'border-accent'
+                              )}>
+                                <AvatarImage src={currentUser.avatarUrl} alt={currentUser.name} />
+                                <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
+                              </Avatar>
+                               <span className="sr-only">Profile</span>
+                          </Link>
+                      </TooltipTrigger>
+                      <TooltipContent side="right">Profile</TooltipContent>
+                  </Tooltip>
+                )}
                  {secondaryMenuItems.map((item) => (
                     <Tooltip key={item.label}>
                         <TooltipTrigger asChild>
