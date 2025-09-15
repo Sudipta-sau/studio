@@ -11,7 +11,7 @@ export default function ProfilePage() {
 
     return (
         <AppContainer>
-            <AppHeader title="My Profile" />
+            <AppHeader title="My Profile" isProfilePage={true} />
             <main className="flex-1 p-4 md:p-6 overflow-y-auto">
                 <ProfileClient user={currentUser} isCurrentUser />
             </main>

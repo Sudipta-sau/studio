@@ -1,5 +1,4 @@
-import { MainSidebar } from '@/components/layout/main-sidebar';
-import { SidebarProvider } from '@/components/ui/sidebar';
+import { BottomNavbar } from '@/components/layout/bottom-navbar';
 
 export default function AppLayout({
   children,
@@ -7,9 +6,9 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <SidebarProvider>
-      <MainSidebar />
+    <>
       {children}
-    </SidebarProvider>
+      <BottomNavbar />
+    </>
   );
 }
