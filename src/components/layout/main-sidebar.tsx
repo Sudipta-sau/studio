@@ -19,6 +19,7 @@ import {
   User,
   LogOut,
   HeartPulse,
+  Users2
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -29,6 +30,7 @@ const menuItems = [
   { href: '/', label: 'Feed', icon: Home },
   { href: '/chat', label: 'Chats', icon: MessageCircle },
   { href: '/guides', label: 'Guides', icon: Users },
+  { href: '/friends', label: 'Friends', icon: Users2 },
   { href: '/verification', label: 'Verification', icon: ShieldCheck },
   { href: '/moderation', label: 'Moderation', icon: ShieldAlert },
 ];

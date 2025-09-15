@@ -5,18 +5,23 @@ import Image from 'next/image';
 import { Button } from '../ui/button';
 import { ThumbsUp, MessageSquare, Verified, Star } from 'lucide-react';
 import { Badge } from '../ui/badge';
+import Link from 'next/link';
 
 export function PostCard({ post }: { post: Post }) {
   return (
     <Card className="overflow-hidden shadow-lg shadow-black/20 bg-card">
       <CardHeader className="flex flex-row items-center gap-4 p-4">
-        <Avatar>
-          <AvatarImage src={post.author.avatarUrl} alt={post.author.name} />
-          <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
-        </Avatar>
+        <Link href={`/profile/${post.author.id}`} className="flex-shrink-0">
+          <Avatar>
+            <AvatarImage src={post.author.avatarUrl} alt={post.author.name} />
+            <AvatarFallback>{post.author.name.charAt(0)}</AvatarFallback>
+          </Avatar>
+        </Link>
         <div className="grid gap-1">
           <div className="flex items-center gap-2">
-            <p className="font-semibold">{post.author.name}</p>
+            <Link href={`/profile/${post.author.id}`} className="font-semibold hover:underline">
+              {post.author.name}
+            </Link>
             {post.author.isVerified && (
               <Verified className="h-4 w-4 text-accent" title="Verified User" />
             )}
