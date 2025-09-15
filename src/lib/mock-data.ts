@@ -15,6 +15,7 @@ export type Post = {
   likes: number;
   comments: number;
   createdAt: string;
+  location?: string;
 };
 
 export type Guide = {
@@ -25,6 +26,7 @@ export type Guide = {
     reviewCount: number;
     specialties: string[];
     bio: string;
+    location: string;
 }
 
 export type ChatMessage = {
@@ -45,6 +47,7 @@ export type ChatRoom = {
     lastMessage: string;
     lastMessageTime: string;
     messages: ChatMessage[];
+    location?: string;
 }
 
 export const users: User[] = [
@@ -65,6 +68,7 @@ export const posts: Post[] = [
     likes: 125,
     comments: 23,
     createdAt: '2h ago',
+    location: 'Rishikesh',
   },
   {
     id: 'p2',
@@ -73,6 +77,7 @@ export const posts: Post[] = [
     likes: 42,
     comments: 15,
     createdAt: '5h ago',
+    location: 'Manali',
   },
   {
     id: 'p3',
@@ -83,6 +88,7 @@ export const posts: Post[] = [
     likes: 230,
     comments: 55,
     createdAt: '1d ago',
+    location: 'Delhi',
   },
     {
     id: 'p4',
@@ -91,13 +97,14 @@ export const posts: Post[] = [
     likes: 18,
     comments: 9,
     createdAt: '2d ago',
+    location: 'Goa',
   },
 ];
 
 export const guides: Guide[] = [
-    { id: 'g1', name: 'Priya Sharma', avatarUrl: 'https://picsum.photos/seed/301/200/200', rating: 4.9, reviewCount: 134, specialties: ['History', 'Food Tours'], bio: 'Passionate about sharing the rich history and culinary delights of my city.' },
-    { id: 'g2', name: 'Rohan Joshi', avatarUrl: 'https://picsum.photos/seed/302/200/200', rating: 4.8, reviewCount: 98, specialties: ['Trekking', 'Adventure Sports'], bio: 'An adrenaline junkie and certified mountaineer ready to guide you on your next adventure.' },
-    { id: 'g3', name: 'Anika Reddy', avatarUrl: 'https://picsum.photos/seed/303/200/200', rating: 5.0, reviewCount: 210, specialties: ['Yoga', 'Spiritual Retreats'], bio: 'Helping travelers find peace and wellness through curated spiritual journeys.' },
+    { id: 'g1', name: 'Priya Sharma', avatarUrl: 'https://picsum.photos/seed/301/200/200', rating: 4.9, reviewCount: 134, specialties: ['History', 'Food Tours'], bio: 'Passionate about sharing the rich history and culinary delights of my city.', location: 'Delhi' },
+    { id: 'g2', name: 'Rohan Joshi', avatarUrl: 'https://picsum.photos/seed/302/200/200', rating: 4.8, reviewCount: 98, specialties: ['Trekking', 'Adventure Sports'], bio: 'An adrenaline junkie and certified mountaineer ready to guide you on your next adventure.', location: 'Manali' },
+    { id: 'g3', name: 'Anika Reddy', avatarUrl: 'https://picsum.photos/seed/303/200/200', rating: 5.0, reviewCount: 210, specialties: ['Yoga', 'Spiritual Retreats'], bio: 'Helping travelers find peace and wellness through curated spiritual journeys.', location: 'Rishikesh' },
 ]
 
 export const chatRooms: ChatRoom[] = [
@@ -113,7 +120,8 @@ export const chatRooms: ChatRoom[] = [
             { id: 'm1', sender: users[0], text: 'Hey everyone! Anyone up for a street food tour this evening?', timestamp: '1h ago' },
             { id: 'm2', sender: users[1], text: 'I\'m in! Where should we meet?', timestamp: '30m ago', replyTo: 'm1' },
             { id: 'm3', sender: users[4], text: 'Sounds great! Let\'s meet at 5.', timestamp: '10m ago', reactions: {'👍': 2} },
-        ]
+        ],
+        location: 'Mumbai',
     },
     {
         id: 'cr2',
@@ -140,6 +148,7 @@ export const chatRooms: ChatRoom[] = [
         messages: [
             { id: 'm7', sender: users[2], text: 'Just arrived in Goa. Any recommendations for good, safe places to stay for a solo female traveler?', timestamp: '3d ago' },
             { id: 'm8', sender: users[4], text: 'I recommend staying near Anjuna. It\'s quite safe and has a great vibe.', timestamp: '3d ago' },
-        ]
+        ],
+        location: 'Goa',
     }
 ]
