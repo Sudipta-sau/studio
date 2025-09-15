@@ -1,3 +1,64 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "avatar-alia",
+      "description": "Avatar for user Alia",
+      "imageUrl": "https://picsum.photos/seed/101/100/100",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "avatar-ben",
+      "description": "Avatar for user Ben Carter",
+      "imageUrl": "https://picsum.photos/seed/102/100/100",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "avatar-chloe",
+      "description": "Avatar for user Chloe Davis",
+      "imageUrl": "https://picsum.photos/seed/103/100/100",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "avatar-david",
+      "description": "Avatar for user David Kim",
+      "imageUrl": "https://picsum.photos/seed/104/100/100",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "post-waterfall",
+      "description": "Post image of a waterfall",
+      "imageUrl": "https://picsum.photos/seed/201/600/400",
+      "imageHint": "waterfall nature"
+    },
+    {
+      "id": "post-food",
+      "description": "Post image of street food",
+      "imageUrl": "https://picsum.photos/seed/202/600/400",
+      "imageHint": "street food"
+    },
+    {
+      "id": "guide-1",
+      "description": "Portrait of guide Priya Sharma",
+      "imageUrl": "https://picsum.photos/seed/301/200/200",
+      "imageHint": "woman smiling"
+    },
+    {
+      "id": "guide-2",
+      "description": "Portrait of guide Rohan Joshi",
+      "imageUrl": "https://picsum.photos/seed/302/200/200",
+      "imageHint": "man smiling"
+    },
+    {
+      "id": "guide-3",
+      "description": "Portrait of guide Anika Reddy",
+      "imageUrl": "https://picsum.photos/seed/303/200/200",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "profile-pic",
+      "description": "User's main profile picture",
+      "imageUrl": "https://picsum.photos/seed/user99/200/200",
+      "imageHint": "person travel"
+    }
+  ]
 }
