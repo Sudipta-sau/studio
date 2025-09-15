@@ -30,8 +30,8 @@ import { Separator } from '../ui/separator';
 const menuItems = [
   { href: '/', label: 'Feed', icon: Home },
   { href: '/chat', label: 'Chats', icon: MessageCircle },
-  { href: '/guides', label: 'Guides', icon: Users },
   { href: '/friends', label: 'Friends', icon: Users2 },
+  { href: '/guides', label: 'Guides', icon: Users },
   { href: '/verification', label: 'Verification', icon: ShieldCheck },
   { href: '/moderation', label: 'Moderation', icon: ShieldAlert },
 ];
