@@ -44,14 +44,21 @@ export function ChatLayout() {
     if (existingChat) {
       setSelectedChat(existingChat);
     } else {
-      setSelectedChat(user);
+      // If not, create a temporary "new chat" state with the user
+      // This doesn't permanently create a chat room yet, just sets up the UI
+      // for a new conversation.
+      const newChat: User & { isNew?: boolean } = { ...user, isNew: true };
+      setSelectedChat(newChat);
     }
   };
   
-  const isChatRoom = (chat: any): chat is ChatRoom => 'messages' in chat;
+  const isChatRoom = (chat: any): chat is ChatRoom => 'messages' in chat && !chat.isNew;
+  const isNewChat = (chat: any): chat is User & { isNew: true } => 'isNew' in chat && chat.isNew;
 
-  const chatName = isChatRoom(selectedChat) ? selectedChat.name : selectedChat.name;
-  const chatAvatar = isChatRoom(selectedChat) ? selectedChat.avatarUrl : selectedChat.avatarUrl;
+
+  const chatName = isNewChat(selectedChat) ? selectedChat.name : (isChatRoom(selectedChat) ? selectedChat.name : '');
+  const chatAvatar = isNewChat(selectedChat) ? selectedChat.avatarUrl : (isChatRoom(selectedChat) ? selectedChat.avatarUrl : '');
+
 
   return (
     <div className="grid flex-1 grid-cols-1 md:grid-cols-[300px_1fr] h-[calc(100%-4rem)]">
@@ -116,7 +123,7 @@ export function ChatLayout() {
         <CardHeader className="flex flex-row items-center gap-4 p-4 border-b">
           <Avatar>
             <AvatarImage src={chatAvatar} alt={chatName} />
-            <AvatarFallback>{chatName.charAt(0)}</AvatarFallback>
+            <AvatarFallback>{chatName?.charAt(0)}</AvatarFallback>
           </Avatar>
           <p className="font-semibold text-lg">{chatName}</p>
         </CardHeader>
