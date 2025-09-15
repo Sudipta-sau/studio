@@ -1,3 +1,4 @@
+
 import { AppContainer, AppHeader } from "@/components/layout/app-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function SettingsPage() {
     return (
@@ -55,6 +57,38 @@ export default function SettingsPage() {
                         </CardContent>
                     </Card>
 
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Notifications</CardTitle>
+                            <CardDescription>Manage your notification preferences.</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <Label htmlFor="friend-requests-notif">Friend Requests</Label>
+                                    <p className="text-sm text-muted-foreground">Receive notifications for new friend requests.</p>
+                                </div>
+                                <Switch id="friend-requests-notif" defaultChecked />
+                            </div>
+                            <Separator />
+                             <div className="flex items-center justify-between">
+                                <div>
+                                    <Label htmlFor="dm-notif">Direct Messages</Label>
+                                    <p className="text-sm text-muted-foreground">Get notified when you receive a new message.</p>
+                                </div>
+                                <Switch id="dm-notif" defaultChecked />
+                            </div>
+                            <Separator />
+                             <div className="flex items-center justify-between">
+                                <div>
+                                    <Label htmlFor="group-notif">Group Mentions</Label>
+                                    <p className="text-sm text-muted-foreground">Get notified when someone mentions you in a group.</p>
+                                </div>
+                                <Switch id="group-notif" />
+                            </div>
+                        </CardContent>
+                    </Card>
+
                      <Card>
                         <CardHeader>
                             <CardTitle>Profile Settings</CardTitle>
@@ -71,7 +105,7 @@ export default function SettingsPage() {
                              <Separator />
                              <div className="space-y-2">
                                 <Label htmlFor="bio">Bio</Label>
-                                <Input id="bio" placeholder="Tell us a little about yourself" />
+                                <Textarea id="bio" placeholder="Tell us a little about yourself" defaultValue="Loves to explore new cultures and cuisines. Always on the lookout for the next adventure!" />
                             </div>
                             <div className="flex justify-end">
                                 <Button>Save Changes</Button>
