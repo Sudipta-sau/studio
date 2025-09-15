@@ -1,4 +1,5 @@
 
+'use client';
 import { AppContainer, AppHeader } from "@/components/layout/app-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,8 +10,30 @@ import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import React from "react";
 
 export default function SettingsPage() {
+    const { toast } = useToast();
+
+    const handleSaveChanges = (section: string) => {
+        toast({
+            title: "Settings Saved",
+            description: `Your ${section} settings have been updated.`,
+        });
+    }
+
+    const handleThemeChange = (theme: string) => {
+        const root = window.document.documentElement;
+        root.classList.remove('light', 'dark');
+        if (theme === 'system') {
+            const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            root.classList.add(systemTheme);
+        } else {
+            root.classList.add(theme);
+        }
+    }
+
     return (
         <AppContainer>
             <AppHeader title="Settings" />
@@ -42,7 +65,7 @@ export default function SettingsPage() {
                                         <Textarea id="bio" placeholder="Tell us a little about yourself" defaultValue="Loves to explore new cultures and cuisines. Always on the lookout for the next adventure!" />
                                     </div>
                                     <div className="flex justify-end">
-                                        <Button>Save Profile Changes</Button>
+                                        <Button onClick={() => handleSaveChanges('profile')}>Save Profile Changes</Button>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -60,7 +83,7 @@ export default function SettingsPage() {
                                                 <Label htmlFor="theme">Theme</Label>
                                                 <p className="text-sm text-muted-foreground">Select a color theme for the app.</p>
                                             </div>
-                                            <Select defaultValue="dark">
+                                            <Select defaultValue="dark" onValueChange={handleThemeChange}>
                                                 <SelectTrigger className="w-[180px]">
                                                     <SelectValue placeholder="Select theme" />
                                                 </SelectTrigger>
@@ -155,7 +178,7 @@ export default function SettingsPage() {
                                         <Switch id="friend-requests" />
                                     </div>
                                     <div className="flex justify-end pt-2">
-                                        <Button>Save Privacy Settings</Button>
+                                        <Button onClick={() => handleSaveChanges('privacy')}>Save Privacy Settings</Button>
                                     </div>
                                 </CardContent>
                             </Card>

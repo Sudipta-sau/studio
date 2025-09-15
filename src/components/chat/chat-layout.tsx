@@ -1,13 +1,13 @@
 
 'use client'
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
-import { chatRooms, users } from '@/lib/mock-data';
+import { chatRooms as initialChatRooms, users } from '@/lib/mock-data';
 import type { ChatRoom, ChatMessage as MessageType, User } from '@/lib/mock-data';
 import { ChatMessage } from './chat-message';
 import { Button } from '../ui/button';
@@ -31,7 +31,7 @@ function ContactList({ onSelectUser }: { onSelectUser: (user: User) => void }) {
                 />
             </div>
             <div className="flex flex-col gap-1">
-                {filteredUsers.map((user) => ( // Filter out 'You'
+                {filteredUsers.map((user) => (
                     <button
                         key={user.id}
                         onClick={() => onSelectUser(user)}
@@ -52,17 +52,28 @@ function ContactList({ onSelectUser }: { onSelectUser: (user: User) => void }) {
 }
 
 export function ChatLayout() {
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>(initialChatRooms);
   const [selectedChat, setSelectedChat] = useState<ChatRoom | User>(chatRooms[0]);
+  const [message, setMessage] = useState('');
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const currentUser = users.find(u => u.id === 'u5'); // 'You'
+
+  useEffect(() => {
+    // scroll to bottom when messages change
+    if (scrollAreaRef.current) {
+        const viewport = scrollAreaRef.current.querySelector('div');
+        if(viewport) {
+             viewport.scrollTop = viewport.scrollHeight;
+        }
+    }
+  }, [selectedChat]);
+
 
   const handleSelectUser = (user: User) => {
-    // Check if a chat room already exists with this user
     const existingChat = chatRooms.find(cr => cr.type === 'direct' && (cr.name === user.name));
     if (existingChat) {
       setSelectedChat(existingChat);
     } else {
-      // If not, create a temporary "new chat" state with the user
-      // This doesn't permanently create a chat room yet, just sets up the UI
-      // for a new conversation.
       const newChat: User & { isNew?: boolean } = { ...user, isNew: true };
       setSelectedChat(newChat);
     }
@@ -71,10 +82,48 @@ export function ChatLayout() {
   const isChatRoom = (chat: any): chat is ChatRoom => 'messages' in chat && !chat.isNew;
   const isNewChat = (chat: any): chat is User & { isNew: true } => 'isNew' in chat && chat.isNew;
 
-
   const chatName = isNewChat(selectedChat) ? selectedChat.name : (isChatRoom(selectedChat) ? selectedChat.name : '');
   const chatAvatar = isNewChat(selectedChat) ? selectedChat.avatarUrl : (isChatRoom(selectedChat) ? selectedChat.avatarUrl : '');
 
+  const handleSendMessage = (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!message.trim() || !currentUser) return;
+
+      const newMessage: MessageType = {
+          id: `m${Date.now()}`,
+          sender: currentUser,
+          text: message,
+          timestamp: 'Just now',
+      };
+      
+      if (isChatRoom(selectedChat)) {
+           const updatedChatRooms = chatRooms.map(cr => {
+               if (cr.id === selectedChat.id) {
+                   return { ...cr, messages: [...cr.messages, newMessage], lastMessage: newMessage.text };
+               }
+               return cr;
+           });
+           setChatRooms(updatedChatRooms);
+           const updatedSelectedChat = updatedChatRooms.find(cr => cr.id === selectedChat.id);
+           if (updatedSelectedChat) setSelectedChat(updatedSelectedChat);
+
+      } else if (isNewChat(selectedChat)) {
+          const newChatRoom: ChatRoom = {
+              id: `cr${Date.now()}`,
+              name: selectedChat.name,
+              type: 'direct',
+              avatarUrl: selectedChat.avatarUrl,
+              unreadCount: 0,
+              lastMessage: newMessage.text,
+              lastMessageTime: 'Just now',
+              messages: [newMessage],
+          };
+          setChatRooms([newChatRoom, ...chatRooms]);
+          setSelectedChat(newChatRoom);
+      }
+
+      setMessage('');
+  }
 
   return (
     <div className="grid flex-1 grid-cols-1 md:grid-cols-[300px_1fr] h-full">
@@ -144,7 +193,7 @@ export function ChatLayout() {
           <p className="font-semibold text-lg">{chatName}</p>
         </CardHeader>
         
-        <ScrollArea className="flex-1 p-4">
+        <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
             <div className="space-y-4">
                 {isChatRoom(selectedChat) ? selectedChat.messages.map((msg) => (
                     <ChatMessage key={msg.id} message={msg} />
@@ -155,8 +204,13 @@ export function ChatLayout() {
         </ScrollArea>
 
         <div className="p-4 border-t">
-            <form className="relative">
-                <Input placeholder="Type a message..." className="pr-20" />
+            <form className="relative" onSubmit={handleSendMessage}>
+                <Input 
+                    placeholder="Type a message..." 
+                    className="pr-20"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)} 
+                />
                 <Button variant="ghost" size="icon" className="absolute right-11 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground">
                     <Smile className="h-5 w-5" />
                 </Button>

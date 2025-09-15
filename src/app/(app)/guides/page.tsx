@@ -12,9 +12,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 export default function SearchPage() {
     const [searchTerm, setSearchTerm] = useState('');
+    const { toast } = useToast();
 
     const filteredGuides = useMemo(() => {
         if (!searchTerm) return guides;
@@ -41,6 +43,13 @@ export default function SearchPage() {
             )
         );
     }, [searchTerm]);
+
+    const handleJoinGroup = (groupName: string) => {
+        toast({
+            title: "Group Joined!",
+            description: `You have successfully joined the group: ${groupName}.`,
+        });
+    };
     
     const showResults = searchTerm.length > 0;
 
@@ -91,7 +100,7 @@ export default function SearchPage() {
                                                   <p className="text-sm text-muted-foreground">{room.location}</p>
                                                 </div>
                                             </div>
-                                            <Button variant="outline" size="sm">Join</Button>
+                                            <Button variant="outline" size="sm" onClick={() => handleJoinGroup(room.name)}>Join</Button>
                                         </div>
                                     )) : <p className="text-muted-foreground text-center">No groups found.</p>}
                                 </CardContent>
