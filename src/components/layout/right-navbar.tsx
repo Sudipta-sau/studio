@@ -1,6 +1,6 @@
 'use client';
 
-import { Home, Users, ShieldCheck, User, Search, MessageCircle, Settings, LogOut, HeartPulse } from 'lucide-react';
+import { Home, Users, ShieldCheck, User, Search, MessageCircle, Settings, LogOut, HeartPulse, ShieldAlert } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -15,6 +15,7 @@ const mainMenuItems = [
   { href: '/friends', label: 'Friends', icon: Users },
   { href: '/chat', label: 'Chats', icon: MessageCircle },
   { href: '/verification', label: 'Verification', icon: ShieldCheck },
+  { href: '/moderation', label: 'Moderation', icon: ShieldAlert },
 ];
 
 const secondaryMenuItems = [
