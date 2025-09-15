@@ -54,7 +54,7 @@ export function MainSidebar() {
           <SidebarMenu>
             {menuItems.map((item) => (
               <SidebarMenuItem key={item.label}>
-                <Link href={item.href} passHref legacyBehavior>
+                <Link href={item.href}>
                   <SidebarMenuButton
                     isActive={isActive(item.href)}
                     tooltip={item.label}
@@ -71,7 +71,7 @@ export function MainSidebar() {
           <Separator className="my-2" />
           <SidebarMenu>
             <SidebarMenuItem>
-               <Link href="/profile" passHref legacyBehavior>
+               <Link href="/profile">
                   <SidebarMenuButton
                     isActive={isActive('/profile')}
                     tooltip="Profile"
