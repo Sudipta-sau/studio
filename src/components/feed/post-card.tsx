@@ -6,10 +6,12 @@ import { Button } from '../ui/button';
 import { ThumbsUp, MessageSquare, Verified, Star } from 'lucide-react';
 import { Badge } from '../ui/badge';
 import Link from 'next/link';
+import { formatDistanceToNow } from 'date-fns';
 
 export function PostCard({ post }: { post: Post }) {
+  const timeAgo = formatDistanceToNow(new Date(post.createdAt), { addSuffix: true });
   return (
-    <Card className="overflow-hidden shadow-lg shadow-black/20 bg-card">
+    <Card className="overflow-hidden shadow-lg shadow-black/20 bg-card transition-transform duration-300 hover:scale-[1.02] hover:shadow-accent/20 hover:shadow-2xl">
       <CardHeader className="flex flex-row items-center gap-4 p-4">
         <Link href={`/profile/${post.author.id}`} className="flex-shrink-0">
           <Avatar>
@@ -31,7 +33,7 @@ export function PostCard({ post }: { post: Post }) {
                 </Badge>
             )}
           </div>
-          <p className="text-sm text-muted-foreground">{post.createdAt}</p>
+          <p className="text-sm text-muted-foreground">{timeAgo}</p>
         </div>
       </CardHeader>
       <CardContent className="p-4 pt-0">

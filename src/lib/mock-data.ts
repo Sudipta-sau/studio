@@ -67,7 +67,7 @@ export const posts: Post[] = [
     imageHint: 'waterfall nature',
     likes: 125,
     comments: 23,
-    createdAt: '2h ago',
+    createdAt: '2024-05-20T10:00:00Z',
     location: 'Rishikesh',
   },
   {
@@ -76,7 +76,7 @@ export const posts: Post[] = [
     content: 'Looking for travel buddies for a weekend trip to the mountains. Anyone interested in joining a trek near Manali?',
     likes: 42,
     comments: 15,
-    createdAt: '5h ago',
+    createdAt: '2024-05-20T05:00:00Z',
     location: 'Manali',
   },
   {
@@ -87,7 +87,7 @@ export const posts: Post[] = [
     imageHint: 'street food',
     likes: 230,
     comments: 55,
-    createdAt: '1d ago',
+    createdAt: '2024-05-19T12:00:00Z',
     location: 'Delhi',
   },
     {
@@ -96,7 +96,7 @@ export const posts: Post[] = [
     content: 'Just arrived in Goa. Any recommendations for good, safe places to stay for a solo female traveler?',
     likes: 18,
     comments: 9,
-    createdAt: '2d ago',
+    createdAt: '2024-05-18T18:00:00Z',
     location: 'Goa',
   },
 ];
