@@ -11,6 +11,7 @@ import { Label } from "../ui/label";
 import { Switch } from "../ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import Link from "next/link";
 
 export function ProfileClient({ user, isCurrentUser }: { user: User, isCurrentUser?: boolean }) {
     const { toast } = useToast();
@@ -49,7 +50,9 @@ export function ProfileClient({ user, isCurrentUser }: { user: User, isCurrentUs
                         <p className="text-muted-foreground mt-4">Loves to explore new cultures and cuisines. Always on the lookout for the next adventure!</p>
                     </div>
                      {isCurrentUser ? (
-                        <Button variant="outline">Edit Profile</Button>
+                        <Button variant="outline" asChild>
+                            <Link href="/settings">Edit Profile</Link>
+                        </Button>
                     ) : (
                          <Button onClick={handleFriendRequest} disabled={requestSent}>
                             <UserPlus className="mr-2 h-4 w-4" />
@@ -58,40 +61,6 @@ export function ProfileClient({ user, isCurrentUser }: { user: User, isCurrentUs
                     )}
                 </CardContent>
             </Card>
-
-            {isCurrentUser && (
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Privacy Settings</CardTitle>
-                        <CardDescription>Manage your account privacy and notification settings.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <Label htmlFor="show-location" className="font-semibold">Show my location to groups</Label>
-                                <p className="text-sm text-muted-foreground">Allow groups to see your approximate location.</p>
-                            </div>
-                            <Switch id="show-location" defaultChecked />
-                        </div>
-                        <Separator />
-                        <div className="flex items-center justify-between">
-                             <div>
-                                <Label htmlFor="read-receipts" className="font-semibold">Send read receipts</Label>
-                                <p className="text-sm text-muted-foreground">Let others know when you've read their messages.</p>
-                            </div>
-                            <Switch id="read-receipts" defaultChecked />
-                        </div>
-                         <Separator />
-                        <div className="flex items-center justify-between">
-                             <div>
-                                <Label htmlFor="friend-requests" className="font-semibold">Allow friend requests</Label>
-                                <p className="text-sm text-muted-foreground">Allow other users to send you connection requests.</p>
-                            </div>
-                            <Switch id="friend-requests" />
-                        </div>
-                    </CardContent>
-                </Card>
-            )}
         </div>
     )
 }

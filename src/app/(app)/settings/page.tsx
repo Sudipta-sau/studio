@@ -108,7 +108,42 @@ export default function SettingsPage() {
                                 <Textarea id="bio" placeholder="Tell us a little about yourself" defaultValue="Loves to explore new cultures and cuisines. Always on the lookout for the next adventure!" />
                             </div>
                             <div className="flex justify-end">
-                                <Button>Save Changes</Button>
+                                <Button>Save Profile Changes</Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Privacy Settings</CardTitle>
+                            <CardDescription>Manage your account privacy settings.</CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <Label htmlFor="show-location" className="font-semibold">Show my location to groups</Label>
+                                    <p className="text-sm text-muted-foreground">Allow groups to see your approximate location.</p>
+                                </div>
+                                <Switch id="show-location" defaultChecked />
+                            </div>
+                            <Separator />
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <Label htmlFor="read-receipts" className="font-semibold">Send read receipts</Label>
+                                    <p className="text-sm text-muted-foreground">Let others know when you've read their messages.</p>
+                                </div>
+                                <Switch id="read-receipts" defaultChecked />
+                            </div>
+                            <Separator />
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <Label htmlFor="friend-requests" className="font-semibold">Allow friend requests</Label>
+                                    <p className="text-sm text-muted-foreground">Allow other users to send you connection requests.</p>
+                                </div>
+                                <Switch id="friend-requests" />
+                            </div>
+                             <div className="flex justify-end pt-2">
+                                <Button>Save Privacy Settings</Button>
                             </div>
                         </CardContent>
                     </Card>
