@@ -1,14 +1,11 @@
 'use client';
 
-import { User, users } from "@/lib/mock-data";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { User } from "@/lib/mock-data";
+import { Card, CardContent } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import { Edit, ShieldCheck, Star, UserPlus } from "lucide-react";
 import { Badge } from "../ui/badge";
-import { Separator } from "../ui/separator";
-import { Label } from "../ui/label";
-import { Switch } from "../ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import Link from "next/link";
