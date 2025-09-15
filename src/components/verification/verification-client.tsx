@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
+import { useActionState, useState } from 'react';
+import { useFormStatus } from 'react-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Input } from '@/components/ui/input';
@@ -78,7 +78,7 @@ function UserVerificationForm() {
 
 function GuideVerificationForm() {
     const initialState = { message: null, status: null, data: null };
-    const [state, formAction] = useFormState(verifyGuideAction, initialState);
+    const [state, formAction] = useActionState(verifyGuideAction, initialState);
     
     const [guideIdPhoto, setGuideIdPhoto] = useState<File | null>(null);
     const [aadhaarCardPhoto, setAadhaarCardPhoto] = useState<File | null>(null);
