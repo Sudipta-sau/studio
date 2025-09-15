@@ -19,7 +19,8 @@ import {
   User,
   LogOut,
   HeartPulse,
-  Users2
+  Users2,
+  Settings
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -80,6 +81,17 @@ export function MainSidebar() {
                   >
                     <User className="h-5 w-5" />
                     <span>Profile</span>
+                  </SidebarMenuButton>
+                </Link>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+               <Link href="/settings">
+                  <SidebarMenuButton
+                    isActive={isActive('/settings')}
+                    tooltip="Settings"
+                  >
+                    <Settings className="h-5 w-5" />
+                    <span>Settings</span>
                   </SidebarMenuButton>
                 </Link>
             </SidebarMenuItem>
