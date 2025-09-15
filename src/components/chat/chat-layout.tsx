@@ -1,3 +1,4 @@
+
 'use client'
 
 import { useState } from 'react';
@@ -14,23 +15,38 @@ import { MessageSquare, Plus, Search, Send, Smile, Users } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 
 function ContactList({ onSelectUser }: { onSelectUser: (user: User) => void }) {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const filteredUsers = users.filter(u => u.id !== 'u5' && u.name.toLowerCase().includes(searchTerm.toLowerCase()));
+
     return (
-        <div className="flex flex-col gap-1 p-2">
-            {users.filter(u => u.id !== 'u5').map((user) => ( // Filter out 'You'
-                <button
-                    key={user.id}
-                    onClick={() => onSelectUser(user)}
-                    className="flex items-center gap-3 rounded-lg px-3 py-2 text-left transition-all hover:bg-sidebar-accent"
-                >
-                    <Avatar className="h-10 w-10">
-                        <AvatarImage src={user.avatarUrl} alt={user.name} />
-                        <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex-1 overflow-hidden">
-                        <p className="font-medium truncate">{user.name}</p>
-                    </div>
-                </button>
-            ))}
+        <div className="flex flex-col gap-2 p-2">
+            <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input 
+                    placeholder="Search by username..." 
+                    className="pl-9" 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+            <div className="flex flex-col gap-1">
+                {filteredUsers.map((user) => ( // Filter out 'You'
+                    <button
+                        key={user.id}
+                        onClick={() => onSelectUser(user)}
+                        className="flex items-center gap-3 rounded-lg px-3 py-2 text-left transition-all hover:bg-sidebar-accent"
+                    >
+                        <Avatar className="h-10 w-10">
+                            <AvatarImage src={user.avatarUrl} alt={user.name} />
+                            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 overflow-hidden">
+                            <p className="font-medium truncate">{user.name}</p>
+                        </div>
+                    </button>
+                ))}
+            </div>
         </div>
     );
 }
@@ -66,7 +82,7 @@ export function ChatLayout() {
         <div className="p-4 space-y-4">
             <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search..." className="pl-9" />
+                <Input placeholder="Search chats..." className="pl-9" />
             </div>
             <Button className="w-full">
                 <Plus className="mr-2 h-4 w-4" />
