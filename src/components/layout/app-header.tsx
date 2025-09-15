@@ -25,18 +25,6 @@ export function AppHeader({ title, children, isProfilePage = false }: AppHeaderP
       </div>
       <div className="flex items-center gap-2">
         {children}
-        {!isProfilePage && (
-          <Button variant="ghost" size="icon" asChild>
-            <Link href="/chat">
-              <MessageCircle className="h-5 w-5" />
-              <span className="sr-only">Chats</span>
-            </Link>
-          </Button>
-        )}
-        <Button variant="destructive" size="icon" className="hidden sm:inline-flex">
-          <HeartPulse className="h-5 w-5" />
-          <span className="sr-only">SOS</span>
-        </Button>
         {isProfilePage && (
            <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -63,7 +51,7 @@ const AppContainer = React.forwardRef<
   React.ComponentProps<'div'>
 >(({ className, ...props }, ref) => {
   return (
-    <div ref={ref} className="flex h-screen flex-col pb-16 md:pb-0" {...props} />
+    <div ref={ref} className="flex h-full flex-col" {...props} />
   );
 });
 AppContainer.displayName = 'AppContainer';

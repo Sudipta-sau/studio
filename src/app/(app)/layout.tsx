@@ -1,4 +1,4 @@
-import { BottomNavbar } from '@/components/layout/bottom-navbar';
+import { RightNavbar } from '@/components/layout/right-navbar';
 
 export default function AppLayout({
   children,
@@ -6,9 +6,9 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      {children}
-      <BottomNavbar />
-    </>
+    <div className="flex h-screen">
+      <main className="flex-1 overflow-y-auto">{children}</main>
+      <RightNavbar />
+    </div>
   );
 }
