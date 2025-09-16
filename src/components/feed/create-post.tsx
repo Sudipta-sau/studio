@@ -28,10 +28,10 @@ export function CreatePost() {
             </CardHeader>
             <CardContent className="p-4 pt-0 flex justify-between items-center">
                 <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-accent">
+                    <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-accent-foreground">
                         <ImageIcon className="mr-2 h-5 w-5" /> Photo
                     </Button>
-                     <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-accent">
+                     <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-accent-foreground">
                         <Video className="mr-2 h-5 w-5" /> Video
                     </Button>
                 </div>
