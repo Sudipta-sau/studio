@@ -26,7 +26,7 @@ const secondaryMenuItems = [
     { href: '/settings', label: 'Settings', icon: Settings },
 ]
 
-export function RightNavbar() {
+export function LeftNavbar() {
   const pathname = usePathname();
   const currentUser = users.find(u => u.id === 'u5');
   const [isExpanded, setIsExpanded] = useState(false);
@@ -43,7 +43,7 @@ export function RightNavbar() {
         className="relative"
     >
         <Sidebar 
-            side="right" 
+            side="left" 
             collapsible="icon" 
             className={cn(
                 "transition-all duration-300 ease-in-out",

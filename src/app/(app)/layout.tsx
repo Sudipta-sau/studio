@@ -1,4 +1,4 @@
-import { RightNavbar } from '@/components/layout/right-navbar';
+import { LeftNavbar } from '@/components/layout/left-navbar';
 import { SidebarProvider } from '@/components/ui/sidebar';
 
 export default function AppLayout({
@@ -9,8 +9,8 @@ export default function AppLayout({
   return (
     <SidebarProvider>
       <div className="flex h-screen">
+        <LeftNavbar />
         <main className="flex-1 overflow-y-auto">{children}</main>
-        <RightNavbar />
       </div>
     </SidebarProvider>
   );
