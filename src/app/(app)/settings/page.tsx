@@ -83,13 +83,13 @@ export default function SettingsPage() {
                                                 <Label htmlFor="theme">Theme</Label>
                                                 <p className="text-sm text-muted-foreground">Select a color theme for the app.</p>
                                             </div>
-                                            <Select defaultValue="dark" onValueChange={handleThemeChange}>
+                                            <Select defaultValue="light" onValueChange={handleThemeChange}>
                                                 <SelectTrigger className="w-[180px]">
                                                     <SelectValue placeholder="Select theme" />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectItem value="dark">Cyber Dark</SelectItem>
-                                                    <SelectItem value="light">Neon Light</SelectItem>
+                                                    <SelectItem value="light">Neutral Light</SelectItem>
                                                     <SelectItem value="system">System</SelectItem>
                                                 </SelectContent>
                                             </Select>
