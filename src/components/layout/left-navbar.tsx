@@ -40,14 +40,14 @@ export function LeftNavbar() {
     <div
         onMouseEnter={() => setIsExpanded(true)}
         onMouseLeave={() => setIsExpanded(false)}
-        className="relative"
+        className="h-full"
     >
         <Sidebar 
             side="left" 
             collapsible="icon" 
             className={cn(
                 "transition-all duration-300 ease-in-out",
-                isExpanded ? "w-[16rem]" : "w-[4rem]"
+                isExpanded ? "w-64" : "w-16"
             )}
         >
             <SidebarHeader className="h-14 items-center justify-center">
