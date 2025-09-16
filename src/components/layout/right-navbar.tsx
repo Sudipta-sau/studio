@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Sidebar, SidebarContent, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
 import { Separator } from '../ui/separator';
 import { Logo } from '../icons/logo';
 import { users } from '@/lib/mock-data';
@@ -34,88 +34,84 @@ export function RightNavbar() {
   };
 
   return (
-    <TooltipProvider>
-        <nav className="hidden md:flex flex-col items-center gap-4 px-2 sm:py-4 border-l bg-background">
-            <Link href="/" className="group flex h-9 w-9 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:h-8 md:w-8 md:text-base">
-                <Logo className="h-4 w-4 transition-all group-hover:scale-110" />
-                <span className="sr-only">RoamFree</span>
+    <Sidebar side="right" collapsible="icon" className="group-data-[collapsible=icon]:w-[4rem] transition-all duration-300 ease-in-out">
+        <SidebarHeader className="h-14 items-center justify-center">
+            <Link href="/" className="flex items-center gap-2 font-semibold">
+                <Logo className="h-6 w-6" />
+                <span className="group-data-[collapsible=icon]:hidden">RoamFree</span>
             </Link>
-            <Separator />
-            <div className="flex flex-col items-center gap-2">
-            {mainMenuItems.map((item) => (
-                <Tooltip key={item.label}>
-                    <TooltipTrigger asChild>
-                        <Link
-                            href={item.href}
-                            className={cn(
-                            'flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8',
-                            isActive(item.href) && 'bg-accent text-accent-foreground'
-                            )}
+        </SidebarHeader>
+        <Separator />
+        <SidebarContent>
+            <SidebarMenu>
+                {mainMenuItems.map((item) => (
+                    <SidebarMenuItem key={item.label}>
+                        <SidebarMenuButton
+                            asChild
+                            isActive={isActive(item.href)}
+                            className="justify-start group-data-[collapsible=icon]:justify-center"
                         >
-                            <item.icon className="h-5 w-5" />
-                            <span className="sr-only">{item.label}</span>
-                        </Link>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">{item.label}</TooltipContent>
-                </Tooltip>
-            ))}
-            </div>
-            <Separator />
-            <div className="mt-auto flex flex-col items-center gap-2">
-                 <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button variant="destructive" size="icon" className="h-8 w-8">
-                            <HeartPulse className="h-5 w-5" />
-                            <span className="sr-only">SOS</span>
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">SOS</TooltipContent>
-                </Tooltip>
+                            <Link href={item.href}>
+                                <item.icon className="h-5 w-5" />
+                                <span className="group-data-[collapsible=icon]:hidden">{item.label}</span>
+                            </Link>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                ))}
+            </SidebarMenu>
+        </SidebarContent>
+        <Separator />
+        <SidebarFooter>
+             <div className="flex flex-col gap-2 items-center group-data-[collapsible=icon]:w-full">
+                <Button variant="destructive" className="w-full group-data-[collapsible=icon]:w-auto group-data-[collapsible=icon]:h-10 group-data-[collapsible=icon]:aspect-square group-data-[collapsible=icon]:p-0">
+                    <HeartPulse className="h-5 w-5" />
+                    <span className="group-data-[collapsible=icon]:hidden ml-2">SOS</span>
+                </Button>
                 {currentUser && (
-                  <Tooltip>
-                      <TooltipTrigger asChild>
-                          <Link href="/profile">
-                              <Avatar className={cn(
-                                'h-9 w-9 md:h-8 md:w-8 border-2 border-transparent',
-                                isActive('/profile') && 'border-accent'
-                              )}>
-                                <AvatarImage src={currentUser.avatarUrl} alt={currentUser.name} />
-                                <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
-                              </Avatar>
-                               <span className="sr-only">Profile</span>
-                          </Link>
-                      </TooltipTrigger>
-                      <TooltipContent side="right">Profile</TooltipContent>
-                  </Tooltip>
+                    <SidebarMenu>
+                        <SidebarMenuItem>
+                             <SidebarMenuButton
+                                asChild
+                                isActive={isActive('/profile')}
+                                className="justify-start group-data-[collapsible=icon]:justify-center"
+                            >
+                                <Link href="/profile">
+                                    <Avatar className="h-7 w-7">
+                                        <AvatarImage src={currentUser.avatarUrl} alt={currentUser.name} />
+                                        <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
+                                    </Avatar>
+                                    <span className="group-data-[collapsible=icon]:hidden">Profile</span>
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    </SidebarMenu>
                 )}
                  {secondaryMenuItems.map((item) => (
-                    <Tooltip key={item.label}>
-                        <TooltipTrigger asChild>
-                            <Link
-                                href={item.href}
-                                className={cn(
-                                'flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8',
-                                isActive(item.href) && 'bg-accent text-accent-foreground'
-                                )}
+                    <SidebarMenu key={item.label} className="w-full">
+                         <SidebarMenuItem>
+                            <SidebarMenuButton
+                                asChild
+                                isActive={isActive(item.href)}
+                                className="justify-start group-data-[collapsible=icon]:justify-center"
                             >
-                                <item.icon className="h-5 w-5" />
-                                <span className="sr-only">{item.label}</span>
-                            </Link>
-                        </TooltipTrigger>
-                        <TooltipContent side="right">{item.label}</TooltipContent>
-                    </Tooltip>
+                                <Link href={item.href}>
+                                    <item.icon className="h-5 w-5" />
+                                    <span className="group-data-[collapsible=icon]:hidden">{item.label}</span>
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    </SidebarMenu>
                 ))}
-                 <Tooltip>
-                    <TooltipTrigger asChild>
-                        <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                 <SidebarMenu className="w-full">
+                     <SidebarMenuItem>
+                        <SidebarMenuButton variant="ghost" className="w-full justify-start group-data-[collapsible=icon]:justify-center">
                             <LogOut className="h-5 w-5" />
-                            <span className="sr-only">Logout</span>
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipContent side="right">Logout</TooltipContent>
-                </Tooltip>
-            </div>
-        </nav>
-    </TooltipProvider>
+                            <span className="group-data-[collapsible=icon]:hidden">Logout</span>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                 </SidebarMenu>
+             </div>
+        </SidebarFooter>
+    </Sidebar>
   );
 }
