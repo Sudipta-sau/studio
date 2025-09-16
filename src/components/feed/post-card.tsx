@@ -128,7 +128,7 @@ export function PostCard({ post }: { post: Post }) {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={handleReport}>
+                <DropdownMenuItem onClick={handleReport} className="hover:text-accent-foreground focus:text-accent-foreground">
                     <Flag className="mr-2 h-4 w-4" /> Report
                 </DropdownMenuItem>
                 <DropdownMenuSub>
