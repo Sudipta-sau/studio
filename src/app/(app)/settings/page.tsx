@@ -11,10 +11,19 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function SettingsPage() {
     const { toast } = useToast();
+    const [theme, setTheme] = useState('light');
+
+    useEffect(() => {
+        const storedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(storedTheme);
+        document.documentElement.classList.remove('light', 'dark');
+        document.documentElement.classList.add(storedTheme);
+        document.documentElement.style.colorScheme = storedTheme;
+    }, []);
 
     const handleSaveChanges = (section: string) => {
         toast({
@@ -23,14 +32,21 @@ export default function SettingsPage() {
         });
     }
 
-    const handleThemeChange = (theme: string) => {
+    const handleThemeChange = (newTheme: string) => {
         const root = window.document.documentElement;
         root.classList.remove('light', 'dark');
-        if (theme === 'system') {
+        
+        if (newTheme === 'system') {
             const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
             root.classList.add(systemTheme);
+            localStorage.setItem('theme', systemTheme);
+            setTheme(systemTheme);
+             root.style.colorScheme = systemTheme;
         } else {
-            root.classList.add(theme);
+            root.classList.add(newTheme);
+            localStorage.setItem('theme', newTheme);
+            setTheme(newTheme);
+             root.style.colorScheme = newTheme;
         }
     }
 
@@ -83,13 +99,13 @@ export default function SettingsPage() {
                                                 <Label htmlFor="theme">Theme</Label>
                                                 <p className="text-sm text-muted-foreground">Select a color theme for the app.</p>
                                             </div>
-                                            <Select defaultValue="light" onValueChange={handleThemeChange}>
+                                            <Select value={theme} onValueChange={handleThemeChange}>
                                                 <SelectTrigger className="w-[180px]">
                                                     <SelectValue placeholder="Select theme" />
                                                 </SelectTrigger>
                                                 <SelectContent>
-                                                    <SelectItem value="dark">Cyber Dark</SelectItem>
-                                                    <SelectItem value="light">Neutral Light</SelectItem>
+                                                    <SelectItem value="dark">Serene Dark</SelectItem>
+                                                    <SelectItem value="light">Serene Light</SelectItem>
                                                     <SelectItem value="system">System</SelectItem>
                                                 </SelectContent>
                                             </Select>
