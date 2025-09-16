@@ -1,8 +1,7 @@
 'use client';
 
-import { AppHeader } from '@/components/layout/app-header';
 import { PostCard } from './post-card';
-import { posts, users } from '@/lib/mock-data';
+import { posts } from '@/lib/mock-data';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useState, useMemo } from 'react';
 import type { Post } from '@/lib/mock-data';
@@ -27,19 +26,18 @@ export function CommunityFeed() {
   }, [sortType]);
   
   return (
-    <>
-      <AppHeader title="Community Feed">
-        <Tabs defaultValue="popular" className="w-[300px]" onValueChange={(value) => setSortType(value as 'popular' | 'recent' | 'following')}>
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="popular">Popular</TabsTrigger>
-            <TabsTrigger value="recent">Recent</TabsTrigger>
-            <TabsTrigger value="following">Following</TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </AppHeader>
       <main className="flex-1 p-4 md:p-6 overflow-y-auto">
         <div className="mx-auto max-w-2xl space-y-6">
           <CreatePost />
+           <div className="flex justify-center">
+            <Tabs defaultValue="popular" className="w-full max-w-sm" onValueChange={(value) => setSortType(value as 'popular' | 'recent' | 'following')}>
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="popular" className="hover:text-accent-foreground focus:text-accent-foreground">Popular</TabsTrigger>
+                <TabsTrigger value="recent" className="hover:text-accent-foreground focus:text-accent-foreground">Recent</TabsTrigger>
+                <TabsTrigger value="following" className="hover:text-accent-foreground focus:text-accent-foreground">Following</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
           {sortedPosts.map((post, index) => (
             <div
               key={post.id}
@@ -51,6 +49,5 @@ export function CommunityFeed() {
           ))}
         </div>
       </main>
-    </>
   );
 }
