@@ -1,3 +1,4 @@
+
 export type User = {
   id: string;
   name: string;
@@ -118,7 +119,7 @@ export const chatRooms: ChatRoom[] = [
         lastMessageTime: '10m',
         messages: [
             { id: 'm1', sender: users[0], text: 'Hey everyone! Anyone up for a street food tour this evening?', timestamp: '1h ago' },
-            { id: 'm2', sender: users[1], text: 'I\'m in! Where should we meet?', timestamp: '30m ago', replyTo: 'm1' },
+            { id: 'm2', sender: users[1], text: 'I\'m in! Where should we meet?', timestamp: '30m ago', replyTo: 'Hey everyone! Anyone up for a street food tour this evening?' },
             { id: 'm3', sender: users[4], text: 'Sounds great! Let\'s meet at 5.', timestamp: '10m ago', reactions: {'👍': 2} },
         ],
         location: 'Mumbai',
@@ -152,3 +153,5 @@ export const chatRooms: ChatRoom[] = [
         location: 'Goa',
     }
 ]
+
+    

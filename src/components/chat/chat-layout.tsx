@@ -3,7 +3,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { CardHeader } from '@/components/ui/card';
+import { Card, CardHeader } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { cn } from '@/lib/utils';
@@ -13,6 +13,7 @@ import { ChatMessage } from './chat-message';
 import { Button } from '../ui/button';
 import { MessageSquare, Plus, Search, Send, Smile, Users } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
+import { useToast } from '@/hooks/use-toast';
 
 function ContactList({ onSelectUser }: { onSelectUser: (user: User) => void }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -52,11 +53,13 @@ function ContactList({ onSelectUser }: { onSelectUser: (user: User) => void }) {
 }
 
 export function ChatLayout() {
+  const { toast } = useToast();
   const [chatRooms, setChatRooms] = useState<ChatRoom[]>(initialChatRooms);
   const [selectedChat, setSelectedChat] = useState<ChatRoom | User>(chatRooms[0]);
   const [message, setMessage] = useState('');
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const currentUser = users.find(u => u.id === 'u5'); // 'You'
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     // scroll to bottom when messages change
@@ -66,7 +69,7 @@ export function ChatLayout() {
              viewport.scrollTop = viewport.scrollHeight;
         }
     }
-  }, [selectedChat]);
+  }, [selectedChat, chatRooms]);
 
 
   const handleSelectUser = (user: User) => {
@@ -125,13 +128,52 @@ export function ChatLayout() {
       setMessage('');
   }
 
+  const handleReaction = (messageId: string, emoji: string) => {
+    if (!isChatRoom(selectedChat)) return;
+    const updatedChatRooms = chatRooms.map(cr => {
+        if (cr.id === selectedChat.id) {
+            const updatedMessages = cr.messages.map(msg => {
+                if (msg.id === messageId) {
+                    const newReactions = {...(msg.reactions || {})};
+                    newReactions[emoji] = (newReactions[emoji] || 0) + 1;
+                    return {...msg, reactions: newReactions};
+                }
+                return msg;
+            });
+            return {...cr, messages: updatedMessages};
+        }
+        return cr;
+    });
+    setChatRooms(updatedChatRooms);
+    const updatedSelectedChat = updatedChatRooms.find(cr => cr.id === selectedChat.id);
+    if(updatedSelectedChat) setSelectedChat(updatedSelectedChat);
+  }
+
+  const handleReply = (message: MessageType) => {
+      toast({
+        title: "Replying to message",
+        description: `You are replying to: "${message.text}"`,
+      })
+      // You would typically set some state here to show a reply preview above the input
+      // For now, we just show a toast
+  }
+
+  const filteredChatRooms = chatRooms.filter(chat =>
+    chat.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="grid flex-1 grid-cols-1 md:grid-cols-[300px_1fr] h-full">
       <aside className="hidden md:flex flex-col border-r">
         <div className="p-4 space-y-4">
             <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Search chats..." className="pl-9" />
+                <Input 
+                    placeholder="Search chats..." 
+                    className="pl-9" 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
             </div>
             <Button className="w-full">
                 <Plus className="mr-2 h-4 w-4" />
@@ -151,7 +193,7 @@ export function ChatLayout() {
             <ScrollArea className="flex-1">
                  <TabsContent value="chats">
                     <div className="flex flex-col gap-1 p-2">
-                        {chatRooms.map((chat) => (
+                        {filteredChatRooms.map((chat) => (
                         <button
                             key={chat.id}
                             onClick={() => setSelectedChat(chat)}
@@ -196,7 +238,12 @@ export function ChatLayout() {
         <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
             <div className="space-y-4">
                 {isChatRoom(selectedChat) ? selectedChat.messages.map((msg) => (
-                    <ChatMessage key={msg.id} message={msg} />
+                    <ChatMessage 
+                        key={msg.id} 
+                        message={msg} 
+                        onReact={(emoji) => handleReaction(msg.id, emoji)}
+                        onReply={() => handleReply(msg)}
+                    />
                 )) : (
                     <div className="text-center text-muted-foreground p-8">Start a conversation with {chatName}.</div>
                 )}
@@ -223,3 +270,5 @@ export function ChatLayout() {
     </div>
   );
 }
+
+    
